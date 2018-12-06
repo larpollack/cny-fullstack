@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import Home from "./components/Home";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
+import Navbar from "./components/Navbar";
 import PrivateRoute from "./components/PrivateRoute";
 import app from "./firebase";
 
@@ -38,6 +39,7 @@ export default class App extends Component {
     return (
       <Router>
         <div>
+          <Navbar authenticated={authenticated} />
           <PrivateRoute
             exact
             path="/"
