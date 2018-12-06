@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import LoginForm from "./LoginForm";
 import { withRouter } from "react-router";
+import { Link } from "react-router-dom";
 import app from "../firebase";
+import Signup from "./Signup";
 
 class Login extends Component {
   handleSignup = async event => {
@@ -17,7 +19,16 @@ class Login extends Component {
     }
   };
   render() {
-    return <LoginForm onSubmit={this.handleSignup} />;
+    return (
+      <div>
+        <LoginForm onSubmit={this.handleSignup} />
+        <div>
+          <h3>
+            Or <Link to="/signup">Sign Up!</Link>
+          </h3>
+        </div>
+      </div>
+    );
   }
 }
 
