@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import data from "../data";
-import { FormattedRelative } from "react-intl";
 
 export default class Post extends Component {
   constructor(props) {
@@ -24,8 +23,21 @@ export default class Post extends Component {
     this.setState({ active: true });
   };
 
+  whenCreated = () => {
+    let timeSince =
+      new Date().getTime() - new Date(this.props.post.created * 1000).getTime();
+    if (timeSince < 60000) {
+      return "Just now";
+    } else if (timeSince >= 60000 && timeSince < 3600000) {
+      return `${parseInt(timeSince / 60000)} minutes ago`;
+    } else if (timeSince >= 3600000 && timeSince < 86400000) {
+      return `${parseInt(timeSince / 3600000)} hours ago`;
+    } else if (timeSince >= 86400000) {
+      return `${parseInt(timeSince / 86400000)} days ago`;
+    }
+  };
+
   render() {
-    console.log("single post props", this.props);
     let postList = null;
     if (this.props.postType === "fave") {
       postList = (
@@ -52,15 +64,15 @@ export default class Post extends Component {
           {postList}
           <img src={this.props.post.url} alt="" />
         </div>
-        <h2>{this.props.post.url}</h2>
+        <h2>{this.props.post.title}</h2>
         <div className="post-text">
           <span>
-            <i className="fa fa-user" aria-hidden="true" /> /u/
-            {this.props.post.author} •
+            <i className="fa fa-user" aria-hidden="true" />
+            {` /u/ ${this.props.post.author}   • `}
           </span>
           <span>
-            <i className="fa fa-clock-o" aria-hidden="true" />{" "}
-            <FormattedRelative value={Date.now()} /> •
+            <i className="fa fa-clock-o" aria-hidden="true" />
+            {` ${this.whenCreated()}  •  `}
           </span>
           <span>
             <i className="fa fa-bolt" aria-hidden="true" />{" "}

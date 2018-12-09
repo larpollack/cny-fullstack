@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { IntlProvider } from "react-intl";
 
 import Home from "./components/Home";
 import Login from "./components/Login";
@@ -23,10 +22,10 @@ export default class App extends Component {
     };
   }
 
-  updateFaves(evt) {
+  updateFaves = evt => {
     evt.preventDefault();
     this.setState({ faves: data.getFaves() });
-  }
+  };
 
   componentDidMount() {
     data.fetchData().then(res => {
@@ -56,31 +55,24 @@ export default class App extends Component {
 
   render() {
     const { authenticated, loading, faves, posts } = this.state;
-    console.log("posts", data.fetchData().then(res => res.data));
 
     if (loading) {
       return <p>Loading..</p>;
     }
 
     return (
-      <IntlProvider locale="en">
+      <div className="App">
         <Router>
-          <div>
-            <nav className="nav">
-              <Navbar
-                authenticated={authenticated}
-                faves={faves}
-                posts={posts}
-              />
-              <PrivateRoute
-                exact
-                path="/"
-                component={Home}
-                authenticated={authenticated}
-              />
-              <Route exact path="/login" component={Login} />
-              <Route exact path="/signup" component={Signup} />
-            </nav>
+          <div className="router">
+            <Navbar authenticated={authenticated} faves={faves} posts={posts} />
+            <PrivateRoute
+              exact
+              path="/"
+              component={Home}
+              authenticated={authenticated}
+            />
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/signup" component={Signup} />
             <Switch>
               <Route
                 exact
@@ -90,7 +82,6 @@ export default class App extends Component {
                 )}
               />
               <Route
-                path="/favorites"
                 render={() => (
                   <Favorites faves={faves} updateFaves={this.updateFaves} />
                 )}
@@ -98,7 +89,7 @@ export default class App extends Component {
             </Switch>
           </div>
         </Router>
-      </IntlProvider>
+      </div>
     );
   }
 }

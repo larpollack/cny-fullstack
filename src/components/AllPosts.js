@@ -7,13 +7,13 @@ export default class AllPosts extends Component {
     const updateFaves = this.props.updateFaves || {};
     return (
       <div className="AllPosts">
-        {posts.map(post => (
+        {posts.map((post, id) => (
           <Post
-            key={post.id}
-            id={post.id}
+            key={id}
+            id={id}
             post={post}
             postType={this.props.postType}
-            updateFaves={this.props.updateFaves}
+            updateFaves={updateFaves}
           />
         ))}
       </div>
